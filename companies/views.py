@@ -3,8 +3,6 @@ from .models import Company
 from .serializers import CompanySerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-
-# from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
