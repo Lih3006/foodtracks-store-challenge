@@ -4,6 +4,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
     path("accounts/", ListCreateAccountView.as_view()),
-    path("accounts/<int:pk>/", RetrieveUpdateDeleteAccountView.as_view()),
+    path("accounts/<uuid:pk>/", RetrieveUpdateDeleteAccountView.as_view()),
     path("login/", TokenObtainPairView.as_view()),
 ]
