@@ -17,7 +17,5 @@ class Branch(models.Model):
         "operating_hours.Operating", related_name="branches"
     )
 
-    # customer_id = models.OneToOneField()
-    # store_id = models.ManyToManyField(blank=True, default="")
     def __repr__(self) -> str:
         return f"<Store: {self.store_name} Id: {self.id}>"

@@ -6,20 +6,22 @@ from .serializers import OperatingSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from branches.permissions import IsStateManager, IsCityManager, IsSiteManager
+from branches.permissions import IsLinkedToBranch
 
 
 class ListCreateOperatingView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsLinkedToBranch]
     queryset = Operating.objects.all()
     serializer_class = OperatingSerializer
 
-    def perform_create(self, serializer):
+    """     def perform_create(self, serializer):
         print("Aqui", self)
-        serializer.save()
+        serializer.save() """
 
 
 class RetrieveUpdateDeleteOperatingView(RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsLinkedToBranch]
     queryset = Operating.objects.all()
     serializer_class = OperatingSerializer
