@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "drf_spectacular",
 ]
 
 MY_APPS = [
@@ -140,4 +141,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.Account"
 
-REST_FRAMEWORK = {"ACCESS_TOKEN_LIFETIME": timedelta(hours=4)}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Foodtracks store challenge",
+    "DESCRIPTION": "The Store Management API is an application built on Django, designed to streamline basic store management operations. The API provides straightforward functionalities, allowing users to perform operations with stores such as creating, viewing, updating, and deleting information about specific stores.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
+
+REST_FRAMEWORK = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 4,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
