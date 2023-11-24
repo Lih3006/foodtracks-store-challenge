@@ -15,7 +15,9 @@ class IsLinkedToBranch(permissions.BasePermission):
         return (
             req.user.is_superuser
             or req.user.role == "regional_manager"
+            and req.user.id == obj.accounts.id
             and req.user.branches.filter(id=obj.id).exists()
             or req.user.role == "site_manager"
+            and req.user.id == obj.accounts.id
             and req.user.branches.filter(id=obj.id).exists()
         )

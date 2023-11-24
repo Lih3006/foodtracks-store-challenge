@@ -3,12 +3,13 @@ from .models import Company
 from .serializers import CompanySerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from .permissions import IsAdminAndAccountOwner
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 
 
-class ListCreateCompanyView(ListCreateAPIView):
+class CreateCompanyView(CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminAndAccountOwner]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
@@ -18,7 +19,7 @@ class ListCreateCompanyView(ListCreateAPIView):
 
 class RetrieveUpdateDeleteCompanyView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminAndAccountOwner]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
