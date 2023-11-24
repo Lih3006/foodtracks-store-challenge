@@ -65,12 +65,10 @@ python manage.py runserver
 ````
 
 
-Visit http://127.0.0.1:8000/ in your browser to confirm that the server is running.
-
 
 # API Documentation
 
-Swagger Documentation: http://127.0.0.1:8000/swagger/
+Swagger Documentation: http://localhost:8000/api/docs/swagger-ui/
 
 
 # Testing
