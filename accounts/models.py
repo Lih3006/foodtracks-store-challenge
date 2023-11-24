@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import uuid
+from branches.models import Branch
 
 
 class Account(AbstractUser):
@@ -9,6 +11,7 @@ class Account(AbstractUser):
         ("site_manager", "site_manager"),
         ("site_employer", "site_employer"),
     )
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     password = models.CharField(max_length=128)
     email = models.EmailField(max_length=254, unique=True)
     phone = models.CharField(max_length=14)

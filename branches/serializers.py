@@ -36,7 +36,7 @@ class BranchSerializer(serializers.ModelSerializer):
         branch_instance.operating_hours.set(operating_hours_instances)
         return branch_instance
 
-    def update(self, instance, validated_data: dict):
+    def update(self, instance: Operating, validated_data: dict) -> Operating:
         operating_hours_data = validated_data.pop("operating_hours", [])
 
         instance = super().update(instance, validated_data)
@@ -47,6 +47,3 @@ class BranchSerializer(serializers.ModelSerializer):
         )
 
         return instance
-
-    # TODO vincular id da company
-    # TODO verificar se a empresa existe antes de criar

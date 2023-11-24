@@ -1,7 +1,11 @@
 from django.db import models
+from companies.models import Company
+from operating_hours.models import Operating
+import uuid
 
 
 class Branch(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     store_name = models.CharField(max_length=60)
     zip_code = models.CharField(max_length=5)
     state = models.CharField(max_length=30)

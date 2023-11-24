@@ -8,7 +8,7 @@ from .permissions import IsAdminOrAccountOwner
 
 class ListCreateAccountView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminOrAccountOwner]
+    permission_classes = [IsAdminOrAccountOwner]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
@@ -23,3 +23,8 @@ class RetrieveUpdateDeleteAccountView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsAdminOrAccountOwner]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+
+    def perform_update(self, serializer):
+        branches_data = self.request.data.get("branches", [])
+        serializer.validate_branches(self.request.data.get("branches", []))
+        serializer.save(branches=branches_data)
