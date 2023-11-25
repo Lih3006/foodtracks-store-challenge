@@ -12,6 +12,8 @@ Follow these steps to set up and run the Foodtracks Store Challenge API on your 
 
 - **Python:** [Download and Install Python](https://www.python.org/downloads/)
 - **Virtual Environment (optional but recommended):** [Creating Virtual Environments](https://docs.python.org/3/tutorial/venv.html)
+- **Docker:** [Download and Install Docker](https://www.docker.com/products/docker-desktop)
+
 
 ### Clone the Repository
 
@@ -24,12 +26,12 @@ cd foodtracks-store-challenge
 ```
 # Set Up Virtual Environment (Optional)
 
-Copy code
+# Copy code
 ````bash
 # Create a virtual environment
 python -m venv venv
 
-# Activate the virtual environment
+# Set Up Virtual Environment (Optional)
 
 # On Windows
 venv\Scripts\activate
@@ -41,15 +43,18 @@ source venv/bin/activate
 # Install Dependencies
 
 ````bash
-Copy code
+# Copy code
 
 pip install -r requirements.txt
 ````
-# Run Migrations`
+# Run Migrations
+
 
 ```bash
 
-Copy code
+# Copy code
+
+python manage.py makemigrations
 
 python manage.py migrate
 
@@ -59,12 +64,23 @@ python manage.py migrate
 
 
 ````bash
-Copy code
+# Copy code
 
-python manage.py runserver
+TEST=TEST ./manage.py runserver 
+
 ````
 
 
+
+# Run with Docker Compose
+To run the project using Docker, make sure Docker is installed. Then, execute the following commands:
+
+
+````bash
+# Copy code
+
+docker compose up 
+````
 
 # API Documentation
 
@@ -72,26 +88,29 @@ Swagger Documentation: http://localhost:8000/api/docs/swagger-ui/
 
 
 # Testing
-No automated tests have been implemented yet. Feel free to contribute by adding test coverage.
+No automated tests have been implemented yet. 
 
 # Roles and Responsibilities
 
 ## Owner/Admin:
 
-Can create a company.
-Can create multiple branches under the company.
+- Can create a company.
+- Can create multiple branches under the company.
+- Can edit branch data.
+- Can delete branches.
 
 ## Regional Manager:
 
-Can be created only if there is at least one branch linked.
-Can edit company and branch data.
+- Can be created only if there is at least one branch linked.
+- Can edit branch data.
+- Cannot create or delete branches.
 
 ## Site Manager:
 
-Can be created with only one branch linked.
-Can edit company and branch data.
+- Can be created with only one branch linked.
+- Can edit branch data.
+- Cannot create or delete branches.
 
 ## Employer:
 
-Has access only to view company and branch data.
-Please note that these roles have specific responsibilities and constraints, as mentioned above.
+- Has access only to view company and branch data.
