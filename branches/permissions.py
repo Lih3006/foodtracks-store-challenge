@@ -13,11 +13,7 @@ class IsLinkedToBranch(permissions.BasePermission):
 
     def has_object_permission(self, req: Request, view: View, obj: Branch):
         return (
-            req.user.is_superuser
-            or req.user.role == "regional_manager"
-            and req.user.id == obj.accounts.id
-            and req.user.branches.filter(id=obj.id).exists()
-            or req.user.role == "site_manager"
-            and req.user.id == obj.accounts.id
+            req.user.id == obj.company.owner.id
+            or req.user.role != "site_employer"
             and req.user.branches.filter(id=obj.id).exists()
         )

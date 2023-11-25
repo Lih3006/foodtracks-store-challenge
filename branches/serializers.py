@@ -28,8 +28,9 @@ class BranchSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict):
         operating_hours_data = validated_data.pop("operating_hours")
+        company = validated_data.pop("company")
 
-        branch_instance = Branch.objects.create(**validated_data)
+        branch_instance = Branch.objects.create(**validated_data, company=company)
         operating_hours_instances = [
             Operating.objects.create(**data) for data in operating_hours_data
         ]

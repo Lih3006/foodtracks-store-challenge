@@ -9,7 +9,7 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 
 class CreateCompanyView(CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminAndAccountOwner]
+    permission_classes = [IsAdminAndAccountOwner]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
@@ -19,7 +19,7 @@ class CreateCompanyView(CreateAPIView):
 
 class RetrieveUpdateDeleteCompanyView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminAndAccountOwner]
+    permission_classes = [IsAdminAndAccountOwner]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
