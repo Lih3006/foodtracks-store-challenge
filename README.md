@@ -34,7 +34,7 @@ python -m venv venv
 # Set Up Virtual Environment (Optional)
 
 # On Windows
-venv\Scripts\activate
+source venv/scripts/activate
 
 # On macOS/Linux
 source venv/bin/activate
@@ -75,6 +75,8 @@ TEST=TEST ./manage.py runserver
 # Run with Docker Compose
 To run the project using Docker, make sure Docker is installed. Then, execute the following commands:
 
+
+Copy the .env.example file and rename it with .env and inside it enter your credentials for accessing postgresql
 
 ````bash
 # Copy code
