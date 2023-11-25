@@ -23,10 +23,16 @@ class AccountSerializer(serializers.ModelSerializer):
             "password": {"write_only": True},
             "is_superuser": {"default": False},
         }
-        depth = 1
 
     def validate_branches(self, value):
         user_role = self.initial_data.get("role", None)
+        if user_role == None:
+            user_role = self.context["request"].user.role
+
+        if user_role == "owner" and len(value) != 0:
+            raise serializers.ValidationError(
+                {"message": "Owner does not have branches."}
+            )
 
         if user_role == "regional_manager" and len(value) == 0:
             raise serializers.ValidationError(
@@ -64,7 +70,7 @@ class AccountSerializer(serializers.ModelSerializer):
         return account
 
     def update(self, instance: Account, validated_data: dict) -> Account:
-        branches_data = validated_data.pop("branches", [])
+        branches_data = validated_data.pop("branches")
 
         for key, value in validated_data.items():
             if key == "password":

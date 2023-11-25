@@ -12,6 +12,7 @@ class Account(AbstractUser):
         ("site_employer", "site_employer"),
     )
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    username = models.CharField(max_length=150, unique=True)
     password = models.CharField(max_length=128)
     email = models.EmailField(max_length=254, unique=True)
     phone = models.CharField(max_length=14)
