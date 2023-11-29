@@ -21,5 +21,10 @@ class Branch(models.Model):
         "operating_hours.Operating", related_name="branches"
     )
 
+    class Meta:      
+        constraints = [
+            models.UniqueConstraint(fields=["zip_code", "state", "city", "street", "number"], name='unique_address'),
+        ]
+
     def __repr__(self) -> str:
         return f"<Store: {self.store_name} Id: {self.id}>"
