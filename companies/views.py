@@ -5,7 +5,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .permissions import IsAdminAndAccountOwner
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
+from drf_spectacular.utils import extend_schema
 
 class ListCreateCompanyView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
@@ -27,3 +27,11 @@ class RetrieveUpdateDeleteCompanyView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminAndAccountOwner]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+
+    @extend_schema(
+        operation_id='company_put', exclude=True,
+        summary='Update all fields from Company',
+        description='Update all fields from Company',
+    )
+    def put(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)

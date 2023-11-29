@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .permissions import IsLinkedToBranch
 from rest_framework.serializers import ValidationError
+from drf_spectacular.utils import extend_schema
 
 
 class ListCreateBranchView(ListCreateAPIView):
@@ -46,3 +47,11 @@ class RetrieveUpdateDeleteBranchView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsLinkedToBranch]
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
+
+    @extend_schema(
+        operation_id='branch_put', exclude=True,
+        summary='Update all fields from Branch',
+        description='Update all fields from Branch',
+    )
+    def put(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)

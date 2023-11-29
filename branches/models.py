@@ -1,6 +1,4 @@
 from django.db import models
-from companies.models import Company
-from operating_hours.models import Operating
 import uuid
 
 
@@ -21,7 +19,7 @@ class Branch(models.Model):
         "operating_hours.Operating", related_name="branches"
     )
 
-    class Meta:      
+    class Meta:
         constraints = [
             models.UniqueConstraint(fields=["zip_code", "state", "city", "street", "number"], name='unique_address'),
         ]
