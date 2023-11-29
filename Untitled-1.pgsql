@@ -1,1 +1,0 @@
-DELETE FROM accounts_account_branches;
