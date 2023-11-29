@@ -1,8 +1,70 @@
 from rest_framework import serializers
 from .models import Account
 from branches.models import Branch
+from drf_spectacular.utils import extend_schema_serializer
+from drf_spectacular.utils import OpenApiExample
 
 
+@extend_schema_serializer(
+    exclude_fields=('id'),
+    examples=[
+        OpenApiExample(
+            'Create Admin user',
+            summary='Create Admin user',
+            description='To start, create an admin user and then log in ',
+            value={"username": "Stephanie", "password": "123456", "email": "stephanie@mail.com", "phone": "015112802241", "role": "owner", "is_superuser": True},
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            'Create Regional Manager user',
+            summary='Create Regional Manager user',
+            description='Rote to create a Regional Manager user',
+            value={
+                "username": "Mary",
+                "password": "123456",
+                "email": "mary@mail.com",
+                "phone": "015112802241",
+                "branches":
+                    ["{{ _.id_branch }}","{{ _.id_branch_2 }}"],
+                "role": "regional_manager"
+            },
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            'Create Site Manager user',
+            summary='Create Site Manager user',
+            description='Rote to create Site Manager user',
+            value={
+                    "username": "Bia",
+                    "password": "123456",
+                    "email": "bia@mail.com",
+                    "phone": "015112802241",
+                    "branches":
+                        ["{{ _.id_branch }}"],
+                    "role": "site_manager"
+            },
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            'Create Employer Manager user',
+            summary='Create Employer user',
+            description='Rote to create a Employer user',
+            value={
+                    "username": "Eliot",
+                    "password": "123456",
+                    "email": "eliot@mail.com",
+                    "phone": "015112802241",
+                    "branches":
+                        ["{{ _.id_branch }}"],
+                    "role": "site_employer"
+            },
+            request_only=True,
+            response_only=False,
+        ),]
+)
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
