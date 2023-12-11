@@ -1,37 +1,46 @@
+version: '3'
+
 services:
-    db:
-        image: postgres:latest 
-        env_file: .env 
-        ports: 
-            - 5432:5432
-        volumes: 
-           - pgdata:/var/lib/postgresql/data
+  db:
+    image: postgres
+    env_file: .env    
+    volumes:
+      - postgres:/data/postgres
+      - .:/code
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
 
-    migration: 
-        build: . 
-        env_file: .env 
-        command: 
-            bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py migrate'
-        volumes: 
-            - .:/code
-        depends_on: 
-            - db
+  pgadmin:
+    container_name: docker_django_pgadmin_container
+    image: dpage/pgadmin4
+    env_file: .env 
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    depends_on:
+      - db
 
-    web:
-        build: . 
-        env_file: .env 
-        command: 
-            bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
-        volumes: 
-            - .:/code
-        stdin_open: true 
-        tty: true 
-        ports: 
-            - 8000:8000
+  web:
+    build: .  
+    entrypoint: ["./wait-for-postgres.sh"]
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    networks:
+      - postgres
+    depends_on:
+      - db
 
-        depends_on: 
-            - db
-            - migration
+networks:
+  postgres:
+    driver: bridge
 
-volumes: 
-    pgdata:
+volumes:
+    postgres:
+    pgadmin:
