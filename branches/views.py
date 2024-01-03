@@ -2,13 +2,15 @@ from .models import Branch
 from .serializers import BranchSerializer
 from companies.models import Company
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
+from rules.decorators import permisson_required
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .permissions import IsLinkedToBranch
 from rest_framework.serializers import ValidationError
 from drf_spectacular.utils import extend_schema
 
 
+@permisson_required('branches.view_item')
 class ListCreateBranchView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated, IsLinkedToBranch]
